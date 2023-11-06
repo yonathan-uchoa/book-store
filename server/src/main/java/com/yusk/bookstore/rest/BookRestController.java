@@ -1,4 +1,4 @@
-package com.yusk.bookstore.controller;
+package com.yusk.bookstore.rest;
 
 import com.yusk.bookstore.model.BookSearch;
 import com.yusk.bookstore.service.LibraryService;
@@ -17,7 +17,7 @@ public class BookRestController {
     LibraryService libraryService;
 
     @GetMapping
-    public ResponseEntity<BookSearch> bookList(@RequestParam String q, @RequestParam String mode) {
+    public ResponseEntity<BookSearch> bookList(@RequestParam String q, @RequestParam(defaultValue = "everything") String mode) {
         BookSearch books = libraryService.getBooks(q, mode);
         return new ResponseEntity<>(books, HttpStatus.ACCEPTED);
     }

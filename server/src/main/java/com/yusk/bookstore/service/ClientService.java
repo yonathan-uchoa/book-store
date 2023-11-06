@@ -1,5 +1,6 @@
 package com.yusk.bookstore.service;
 
+import com.yusk.bookstore.dto.ClientDTO;
 import com.yusk.bookstore.model.Client;
 
 import java.util.Optional;
@@ -7,7 +8,7 @@ import java.util.Optional;
 public interface ClientService {
     Iterable<Client> searchAll();
 
-    Optional<Client> searchById(Integer id);
+    Optional<ClientDTO> searchById(Integer id);
 
     void insert(Client client);
 

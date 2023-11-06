@@ -1,5 +1,7 @@
 package com.yusk.bookstore.service.impl;
 
+import com.yusk.bookstore.dto.ClientDTO;
+import com.yusk.bookstore.mapper.ClientMapper;
 import com.yusk.bookstore.model.Client;
 import com.yusk.bookstore.repository.ClientRepository;
 import com.yusk.bookstore.service.ClientService;
@@ -13,16 +15,18 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private ClientRepository clientRepository;
 
-
     @Override
     public Iterable<Client> searchAll() {
         return clientRepository.findAll();
     }
 
     @Override
-    public Optional<Client> searchById(Integer id) {
+    public Optional<ClientDTO> searchById(Integer id) {
         Optional<Client> findUser = clientRepository.findById(id);
-        return findUser;
+        Optional<ClientDTO> response = Optional.empty();
+        if(findUser.isPresent())
+            response = Optional.of(ClientMapper.INSTANCE.clientToDTO(findUser.get()));
+        return response;
     }
 
     @Override
@@ -46,6 +50,6 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void delete(Integer id) {
-
+        clientRepository.deleteById(id);
     }
 }

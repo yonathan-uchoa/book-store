@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -22,8 +24,16 @@ public class Client {
     private String username;
     @Column(nullable = false)
     private String password;
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH})
-    @JsonManagedReference
-    private Set<Address> addresses;
-
+    @OneToMany(mappedBy = "client",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                        CascadeType.DETACH, CascadeType.REFRESH}
+    )
+    private List<Address> addresses;
+    @OneToMany(targetEntity = WishList.class,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH},
+            fetch = FetchType.LAZY
+    )
+    @Column(name = "wish_list")
+    private List<WishList> wishLists;
 }

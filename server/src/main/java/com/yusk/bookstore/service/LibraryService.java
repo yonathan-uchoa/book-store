@@ -9,4 +9,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface LibraryService {
     @GetMapping
     BookSearch getBooks(@RequestParam String q, @RequestParam String mode);
+
 }

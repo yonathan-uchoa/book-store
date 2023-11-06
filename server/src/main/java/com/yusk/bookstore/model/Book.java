@@ -1,18 +1,38 @@
 package com.yusk.bookstore.model;
 
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
+@Entity
 @Data
 @NoArgsConstructor
 public class Book {
-    private String key;
-    private String type;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_id")
+    private Integer id;
+
     private String title;
-    private Set<String> author_name;
-    private Set<String> author_alternative_name;
-    public Integer ratings_average;
-    public String cover_edition_key;
+
+    @Column(name="genre")
+    private String genre;
+
+    @Column(name="price")
+    private Float price;
+
+    @Column(name="author")
+    private String author;
+
+    @Column(name="cover_url")
+    private String coverUrl;
+
+    private Float ratings_average;
+
+    @ManyToMany
+    @JoinTable(name = "Wish_list_books")
+    private Set<WishList> wishLists;
+
 }
