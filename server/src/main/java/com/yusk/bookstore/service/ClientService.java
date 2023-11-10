@@ -10,6 +10,6 @@ public interface ClientService {
     Iterable<Client> searchAll();
     Optional<ClientDTO> searchByIdDTO(Integer id);
     Optional<Client> searchById(Integer id);
-    void save(Client client);
+    Client save(Client client);
     void delete(Integer id);
 }

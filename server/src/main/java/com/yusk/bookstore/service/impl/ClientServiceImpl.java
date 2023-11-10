@@ -32,8 +32,8 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.findById(id);
     }
     @Override
-    public void save(Client client) {
-        clientRepository.save(client);
+    public Client save(Client client) {
+        return clientRepository.save(client);
     }
     @Override
     public void delete(Integer id) {
