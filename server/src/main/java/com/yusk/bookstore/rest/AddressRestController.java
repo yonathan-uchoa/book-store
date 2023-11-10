@@ -34,7 +34,8 @@ public class AddressRestController {
             AddressDTO _addressDTO = viaCepService.getCep(addressDTO.getCep());
             AddressMapper.INSTANCE.updateAddress(_addressDTO, _address);
             _address.setClient(_client.get());
-            return ResponseEntity.status(HttpStatus.CREATED).body(_address);
+            Address response = addressService.save(_address);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
 
         return ResponseEntity.notFound().build();

@@ -28,8 +28,7 @@ public class Client {
     @Column(nullable = false)
     private String password;
     @OneToMany(mappedBy = "client",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-                        CascadeType.DETACH, CascadeType.REFRESH},
+            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     private List<Address> addresses;
