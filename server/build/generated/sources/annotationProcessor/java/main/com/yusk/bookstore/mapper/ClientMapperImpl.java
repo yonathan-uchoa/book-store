@@ -1,10 +1,12 @@
 package com.yusk.bookstore.mapper;
 
-import com.yusk.bookstore.dto.AddressDTO;
 import com.yusk.bookstore.dto.ClientDTO;
+import com.yusk.bookstore.dto.request.ClientPostRequestBody;
+import com.yusk.bookstore.dto.request.ClientPutRequestBody;
+import com.yusk.bookstore.dto.response.AddressDTO;
+import com.yusk.bookstore.dto.response.ClientGetResponseBody;
 import com.yusk.bookstore.model.Address;
 import com.yusk.bookstore.model.Client;
-import com.yusk.bookstore.model.WishList;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-05T19:08:35-0400",
+    date = "2023-11-10T10:15:43-0400",
     comments = "version: 1.5.5.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.2.1.jar, environment: Java 17.0.8.1 (Amazon.com Inc.)"
 )
 @Component
@@ -38,7 +40,6 @@ public class ClientMapperImpl implements ClientMapper {
         addressDTO.setGia( value.getGia() );
         addressDTO.setDdd( value.getDdd() );
         addressDTO.setSiafi( value.getSiafi() );
-        addressDTO.setNumber( value.getNumber() );
 
         return addressDTO;
     }
@@ -55,12 +56,72 @@ public class ClientMapperImpl implements ClientMapper {
         clientDTO.setName( client.getName() );
         clientDTO.setUsername( client.getUsername() );
         clientDTO.setAddresses( addressListToAddressDTOList( client.getAddresses() ) );
-        List<WishList> list1 = client.getWishLists();
-        if ( list1 != null ) {
-            clientDTO.setWishLists( new ArrayList<WishList>( list1 ) );
-        }
+        clientDTO.setWishList( client.getWishList() );
 
         return clientDTO;
+    }
+
+    @Override
+    public Client toClient(ClientPostRequestBody clientPostRequestBody) {
+        if ( clientPostRequestBody == null ) {
+            return null;
+        }
+
+        Client client = new Client();
+
+        client.setName( clientPostRequestBody.getName() );
+        client.setUsername( clientPostRequestBody.getUsername() );
+        client.setPassword( clientPostRequestBody.getPassword() );
+
+        return client;
+    }
+
+    @Override
+    public Client toClient(ClientPutRequestBody clientPutRequestBody) {
+        if ( clientPutRequestBody == null ) {
+            return null;
+        }
+
+        Client client = new Client();
+
+        client.setName( clientPutRequestBody.getName() );
+        client.setPassword( clientPutRequestBody.getPassword() );
+
+        return client;
+    }
+
+    @Override
+    public ClientGetResponseBody toResponse(Client client) {
+        if ( client == null ) {
+            return null;
+        }
+
+        ClientGetResponseBody clientGetResponseBody = new ClientGetResponseBody();
+
+        clientGetResponseBody.setId( client.getId() );
+        clientGetResponseBody.setName( client.getName() );
+        clientGetResponseBody.setUsername( client.getUsername() );
+        List<Address> list = client.getAddresses();
+        if ( list != null ) {
+            clientGetResponseBody.setAddresses( new ArrayList<Address>( list ) );
+        }
+        clientGetResponseBody.setWishList( client.getWishList() );
+
+        return clientGetResponseBody;
+    }
+
+    @Override
+    public void updateClient(ClientPutRequestBody clientPutRequestBody, Client client) {
+        if ( clientPutRequestBody == null ) {
+            return;
+        }
+
+        if ( clientPutRequestBody.getName() != null ) {
+            client.setName( clientPutRequestBody.getName() );
+        }
+        if ( clientPutRequestBody.getPassword() != null ) {
+            client.setPassword( clientPutRequestBody.getPassword() );
+        }
     }
 
     @Override
@@ -75,10 +136,7 @@ public class ClientMapperImpl implements ClientMapper {
         client.setName( clientDTO.getName() );
         client.setUsername( clientDTO.getUsername() );
         client.setAddresses( addressDTOListToAddressList( clientDTO.getAddresses() ) );
-        List<WishList> list1 = clientDTO.getWishLists();
-        if ( list1 != null ) {
-            client.setWishLists( new ArrayList<WishList>( list1 ) );
-        }
+        client.setWishList( clientDTO.getWishList() );
 
         return client;
     }
@@ -115,7 +173,6 @@ public class ClientMapperImpl implements ClientMapper {
         address.setGia( addressDTO.getGia() );
         address.setDdd( addressDTO.getDdd() );
         address.setSiafi( addressDTO.getSiafi() );
-        address.setNumber( addressDTO.getNumber() );
 
         return address;
     }
