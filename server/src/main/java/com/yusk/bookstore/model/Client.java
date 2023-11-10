@@ -2,17 +2,20 @@ package com.yusk.bookstore.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
+@DynamicUpdate
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,14 +29,12 @@ public class Client {
     private String password;
     @OneToMany(mappedBy = "client",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-                        CascadeType.DETACH, CascadeType.REFRESH}
-    )
-    private List<Address> addresses;
-    @OneToMany(targetEntity = WishList.class,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-                    CascadeType.DETACH, CascadeType.REFRESH},
+                        CascadeType.DETACH, CascadeType.REFRESH},
             fetch = FetchType.LAZY
     )
-    @Column(name = "wish_list")
-    private List<WishList> wishLists;
+    private List<Address> addresses;
+    @OneToOne(mappedBy = "client",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "wish_list_id", referencedColumnName = "wish_list_id")
+    @JsonManagedReference
+    private WishList wishList;
 }

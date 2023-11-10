@@ -1,15 +1,19 @@
 package com.yusk.bookstore.rest;
 
 import com.yusk.bookstore.dto.ClientDTO;
+import com.yusk.bookstore.dto.request.ClientPostRequestBody;
+import com.yusk.bookstore.dto.request.ClientPutRequestBody;
+import com.yusk.bookstore.dto.response.ClientGetResponseBody;
 import com.yusk.bookstore.mapper.ClientMapper;
 import com.yusk.bookstore.model.Client;
 import com.yusk.bookstore.service.ClientService;
-import feign.Response;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -25,35 +29,41 @@ public class ClientRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> searchById(@PathVariable Integer id) {
-        Optional<ClientDTO> client = clientService.searchById(id);
-        if(client.isPresent())
-            return ResponseEntity.ok(client.get());
+        Optional<Client> client = clientService.searchById(id);
+        if(client.isPresent()) {
+            ClientGetResponseBody response = ClientMapper.INSTANCE.toResponse(client.get());
+            return ResponseEntity.ok(response);
+        }
        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<Client> insert(@RequestBody @Valid Client client){
-        clientService.insert(client);
-        return ResponseEntity.ok(client);
+    public ResponseEntity<Client> save(@RequestBody @Valid ClientPostRequestBody clientDTO){
+        Client _client = ClientMapper.INSTANCE.toClient(clientDTO);
+        clientService.save(_client);
+        return ResponseEntity.status(HttpStatus.CREATED).body(_client);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClientDTO> update(@PathVariable Integer id,@RequestBody @Valid Client client){
-        Optional<ClientDTO> _client = clientService.searchById(id);
+    public ResponseEntity<ClientGetResponseBody> update(@PathVariable Integer id, @RequestBody ClientPutRequestBody clientDTO){
+        Optional<Client> _client = clientService.searchById(id);
+
         if(_client.isPresent()){
-            client.setId(id);
-            clientService.insert(client);
-            return ResponseEntity.ok(ClientMapper.INSTANCE.clientToDTO(client));
+            ClientMapper.INSTANCE.updateClient(clientDTO, _client.get());
+            clientService.save(_client.get());
+            ClientGetResponseBody response = ClientMapper.INSTANCE.toResponse(_client.get());
+            return ResponseEntity.ok(response);
         }
         return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Integer id){
-        Optional<ClientDTO> _client = clientService.searchById(id);
+        Optional<Client> _client = clientService.searchById(id);
         if(_client.isPresent()){
+            String username = _client.get().getUsername();
             clientService.delete(id);
-            return ResponseEntity.ok("client "+_client.getClass().getName()+", removed successful");
+            return ResponseEntity.ok("client " + username + ", removed successful");
         }
         return ResponseEntity.notFound().build();
     }

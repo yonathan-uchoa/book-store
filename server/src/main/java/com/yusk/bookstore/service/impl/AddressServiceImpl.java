@@ -1,10 +1,12 @@
 package com.yusk.bookstore.service.impl;
 
-import com.yusk.bookstore.dto.AddressDTO;
+import com.yusk.bookstore.dto.response.AddressDTO;
+import com.yusk.bookstore.dto.request.AddressPostRequestBody;
 import com.yusk.bookstore.mapper.AddressMapper;
 import com.yusk.bookstore.model.Address;
 import com.yusk.bookstore.model.Client;
 import com.yusk.bookstore.repository.AddressRepository;
+import com.yusk.bookstore.repository.ClientRepository;
 import com.yusk.bookstore.service.AddressService;
 import com.yusk.bookstore.service.ViaCepService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +22,13 @@ public class AddressServiceImpl implements AddressService {
     @Autowired
     private ViaCepService viaCepService;
 
+    @Autowired
+    private ClientRepository clientRepository;
+
 
     @Override
-    public Address insert(Address address) {
-        Address _address = address;
-        address = viaCepService.getCep(address.getCep());
-        address.setClient(_address.getClient());
-        address.setComplemento(_address.getComplemento());
-        address.setSurname(_address.getSurname());
-        address.setNumber(_address.getNumber());
-        addressRepository.save(address);
-        return address;
+    public Address save(Address address) {
+        return addressRepository.save(address);
     }
 
     @Override
@@ -45,13 +43,8 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Optional<AddressDTO> searchById(Integer id) {
-        Optional<Address> findAddress = addressRepository.findById(id);
-        Optional<AddressDTO> response = Optional.empty();
-        if(findAddress.isPresent()){
-            response = Optional.of(AddressMapper.INSTANCE.addressToDTO(findAddress.get()));
-        }
-        return response;
+    public Optional<Address> searchById(Integer id) {
+        return addressRepository.findById(id);
     }
 
     @Override

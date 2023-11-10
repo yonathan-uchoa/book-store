@@ -1,6 +1,6 @@
 package com.yusk.bookstore.service;
 
-import com.yusk.bookstore.model.Address;
+import com.yusk.bookstore.dto.response.AddressDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface ViaCepService {
 
     @GetMapping("/{cep}/json/")
-    Address getCep(@PathVariable("cep") String cep);
+    AddressDTO getCep(@PathVariable("cep") String cep);
 }

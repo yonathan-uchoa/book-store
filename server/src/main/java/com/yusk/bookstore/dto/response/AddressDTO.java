@@ -1,4 +1,4 @@
-package com.yusk.bookstore.dto;
+package com.yusk.bookstore.dto.response;
 
 import com.yusk.bookstore.model.Client;
 import lombok.Data;
