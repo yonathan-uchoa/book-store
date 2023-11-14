@@ -1,7 +1,6 @@
 package com.yusk.bookstore.dto;
 
-import com.yusk.bookstore.model.Address;
-import com.yusk.bookstore.model.Client;
+import com.yusk.bookstore.dto.response.AddressDTO;
 import com.yusk.bookstore.model.WishList;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +14,6 @@ public class ClientDTO {
     private String name;
     private String username;
     private List<AddressDTO> addresses;
-    private List<WishList> wishLists;
+    private WishList wishList;
 
 }

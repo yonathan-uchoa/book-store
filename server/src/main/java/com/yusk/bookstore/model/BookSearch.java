@@ -8,7 +8,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 public class BookSearch {
-    private Set<Book> docs;
+    private Set<BookOnline> docs;
     private String numFound;
     private String q;
     private String start;
