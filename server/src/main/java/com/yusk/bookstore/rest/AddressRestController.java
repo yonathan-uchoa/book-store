@@ -8,6 +8,8 @@ import com.yusk.bookstore.model.Client;
 import com.yusk.bookstore.service.AddressService;
 import com.yusk.bookstore.service.ClientService;
 import com.yusk.bookstore.service.ViaCepService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,7 @@ public class AddressRestController {
     ViaCepService viaCepService;
 
     @PostMapping("/{clientId}")
+    @Operation(security = { @SecurityRequirement(name = "bearer-auth") })
     public ResponseEntity<Address> insert(@PathVariable Integer clientId, @RequestBody @Valid AddressPostRequestBody addressDTO){
         Optional<Client> _client = clientService.searchById(clientId);
         if(_client.isPresent()){
@@ -42,6 +45,7 @@ public class AddressRestController {
     }
 
     @GetMapping("/{addressId}")
+    @Operation(security = { @SecurityRequirement(name = "bearer-auth") })
     public ResponseEntity<Address> searchById(@PathVariable Integer addressId) {
         Optional<Address> _address = addressService.searchById(addressId);
         if(_address.isPresent()){
@@ -51,6 +55,7 @@ public class AddressRestController {
     }
 
     @PutMapping("/{addressId}")
+    @Operation(security = { @SecurityRequirement(name = "bearer-auth") })
     public ResponseEntity<Address> update(@PathVariable Integer addressId, @RequestBody AddressPostRequestBody addressDTO) {
         Optional<Address> _address = addressService.searchById(addressId);
         if(_address.isPresent()){
@@ -65,6 +70,7 @@ public class AddressRestController {
     }
 
     @DeleteMapping("/{addressId}")
+    @Operation(security = { @SecurityRequirement(name = "bearer-auth") })
     public ResponseEntity<String> delete(@PathVariable Integer addressId){
         Optional<Address> _address = addressService.searchById(addressId);
         if(_address.isPresent()){

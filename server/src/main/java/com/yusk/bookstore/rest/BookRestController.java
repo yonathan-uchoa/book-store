@@ -7,6 +7,8 @@ import com.yusk.bookstore.model.Book;
 import com.yusk.bookstore.model.BookSearch;
 import com.yusk.bookstore.service.BookService;
 import com.yusk.bookstore.service.LibraryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,12 +44,14 @@ public class BookRestController {
     }
 
     @PostMapping
+    @Operation(security = { @SecurityRequirement(name = "bearer-auth") })
     public ResponseEntity<Book> save(@RequestBody BookPostRequestBody bookDTO) {
         Book _book = bookService.save(NewBookMapper.INSTANCE.dtoToBook(bookDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(_book);
     }
 
     @PutMapping("/{id}")
+    @Operation(security = { @SecurityRequirement(name = "bearer-auth") })
     public ResponseEntity<Book> update(@PathVariable Integer id, @RequestBody BookPostRequestBody bookDTO) {
         Optional<Book> _book = bookService.searchById(id);
         if(_book.isPresent()) {
@@ -59,6 +63,7 @@ public class BookRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(security = { @SecurityRequirement(name = "bearer-auth") })
     public ResponseEntity<String> delete(@PathVariable Integer id) {
         Optional<Book> _book = bookService.searchById(id);
         if(_book.isPresent()){

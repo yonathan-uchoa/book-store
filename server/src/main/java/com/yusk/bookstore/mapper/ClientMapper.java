@@ -9,6 +9,7 @@ import com.yusk.bookstore.model.Address;
 import com.yusk.bookstore.model.Client;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface ClientMapper {
@@ -23,6 +24,7 @@ public interface ClientMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "addresses", ignore = true)
     @Mapping(target = "wishList", ignore = true)
+    @Mapping(target = "password", source = "password")
     Client toClient (ClientPostRequestBody clientPostRequestBody);
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "username", ignore = true)

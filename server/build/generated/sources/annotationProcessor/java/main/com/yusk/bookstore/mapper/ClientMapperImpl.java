@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-10T12:02:00-0400",
+    date = "2023-11-11T18:04:41-0400",
     comments = "version: 1.5.5.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.2.1.jar, environment: Java 17.0.8.1 (Amazon.com Inc.)"
 )
 @Component
@@ -69,9 +69,9 @@ public class ClientMapperImpl implements ClientMapper {
 
         Client client = new Client();
 
+        client.setPassword( clientPostRequestBody.getPassword() );
         client.setName( clientPostRequestBody.getName() );
         client.setUsername( clientPostRequestBody.getUsername() );
-        client.setPassword( clientPostRequestBody.getPassword() );
 
         return client;
     }
@@ -84,8 +84,8 @@ public class ClientMapperImpl implements ClientMapper {
 
         Client client = new Client();
 
-        client.setName( clientPutRequestBody.getName() );
         client.setPassword( clientPutRequestBody.getPassword() );
+        client.setName( clientPutRequestBody.getName() );
 
         return client;
     }
@@ -116,11 +116,11 @@ public class ClientMapperImpl implements ClientMapper {
             return;
         }
 
-        if ( clientPutRequestBody.getName() != null ) {
-            client.setName( clientPutRequestBody.getName() );
-        }
         if ( clientPutRequestBody.getPassword() != null ) {
             client.setPassword( clientPutRequestBody.getPassword() );
+        }
+        if ( clientPutRequestBody.getName() != null ) {
+            client.setName( clientPutRequestBody.getName() );
         }
     }
 

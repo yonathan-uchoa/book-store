@@ -6,7 +6,10 @@ import com.yusk.bookstore.dto.request.ClientPutRequestBody;
 import com.yusk.bookstore.dto.response.ClientGetResponseBody;
 import com.yusk.bookstore.mapper.ClientMapper;
 import com.yusk.bookstore.model.Client;
+import com.yusk.bookstore.model.Role;
 import com.yusk.bookstore.service.ClientService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,11 +26,13 @@ public class ClientRestController {
     private ClientService clientService;
 
     @GetMapping
+    @Operation(security = { @SecurityRequirement(name = "bearer-auth") })
     public ResponseEntity<Iterable<Client>> searchAll() {
         return ResponseEntity.ok(clientService.searchAll());
     }
 
     @GetMapping("/{id}")
+    @Operation(security = { @SecurityRequirement(name = "bearer-auth") })
     public ResponseEntity<?> searchById(@PathVariable Integer id) {
         Optional<Client> client = clientService.searchById(id);
         if(client.isPresent()) {
@@ -38,6 +43,7 @@ public class ClientRestController {
     }
 
     @PostMapping
+    @Operation(security = { @SecurityRequirement(name = "bearer-auth") })
     public ResponseEntity<Client> save(@RequestBody @Valid ClientPostRequestBody clientDTO){
         Client _client = ClientMapper.INSTANCE.toClient(clientDTO);
         clientService.save(_client);
@@ -45,6 +51,7 @@ public class ClientRestController {
     }
 
     @PutMapping("/{id}")
+    @Operation(security = { @SecurityRequirement(name = "bearer-auth") })
     public ResponseEntity<ClientGetResponseBody> update(@PathVariable Integer id, @RequestBody ClientPutRequestBody clientDTO){
         Optional<Client> _client = clientService.searchById(id);
 
@@ -58,6 +65,7 @@ public class ClientRestController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(security = { @SecurityRequirement(name = "bearer-auth") })
     public ResponseEntity<String> delete(@PathVariable Integer id){
         Optional<Client> _client = clientService.searchById(id);
         if(_client.isPresent()){
