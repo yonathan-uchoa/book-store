@@ -24,6 +24,12 @@ public class BookServiceImpl implements BookService {
     public Book save(Book book) {
         return bookRepository.save(book);
     }
+
+    @Override
+    public Iterable<Book> findByTitleContaining(String infix){
+        return bookRepository.findByTitleContaining(infix);
+    }
+
     @Override
     @Transactional
     public void delete(Integer id) {

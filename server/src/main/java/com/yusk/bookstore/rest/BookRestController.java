@@ -31,8 +31,10 @@ public class BookRestController {
         return new ResponseEntity<>(books, HttpStatus.ACCEPTED);
     }
     @GetMapping
-    public ResponseEntity<Iterable<Book>> searchAll(){
-        return ResponseEntity.ok().body(bookService.searchAll());
+    public ResponseEntity<Iterable<Book>> searchAll(@RequestParam(required = false) String title) {
+        if(title == null)
+            return ResponseEntity.ok().body(bookService.searchAll());
+        return ResponseEntity.ok().body(bookService.findByTitleContaining(title));
     }
     @GetMapping("/{id}")
     public ResponseEntity<Book> searchById(@PathVariable Integer id) {
