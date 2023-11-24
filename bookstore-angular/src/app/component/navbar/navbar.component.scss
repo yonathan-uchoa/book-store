@@ -3,8 +3,14 @@
   justify-content: center;
   background-color: #2c1d16;
   color: #b6b0ac;
+  position: sticky;
+  top: 0;
 }
 
 a:hover {
   color: #a3d07e;
 }
+a {
+  font-size: clamp(0.25rem, 1.5vw, 1rem);
+}
+

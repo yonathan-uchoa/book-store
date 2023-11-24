@@ -1,0 +1,41 @@
+<!-- <mat-drawer-container
+[autosize]="true"
+class="min-h-full max-w-4xl mx-auto border-x">
+  <mat-drawer-content class="p-6">
+
+  </mat-drawer-content>
+  <mat-drawer-content class="p-6">
+    <mat-grid-list
+    gutterSize="16"
+    [cols]="cols"
+    [rowHeight]="rowHeight"
+    >
+      <mat-grid-tile *ngFor="let book of books; let i = index">
+        <div class="flex-auto">
+          <app-book-list [book]='book' class="w-full"></app-book-list>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+
+  </mat-drawer-content>
+
+</mat-drawer-container> -->
+<div class="flex flex-row min-h-[90vh] ">
+  <nav class="grow-0 w-64 shadow-sm bg-gray-200">teste</nav>
+  <main class="flex-1 bg-gray-300">
+    <div class="w-full overflow-y-auto">
+      <app-search-bar (books)="getBooks($event)"></app-search-bar>
+      <app-book-list [books]='books'></app-book-list>
+    </div>
+  </main>
+</div>
+
+
+
+
+
+<!-- <mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened></mat-drawer>
+  <mat-drawer-content>Main content</mat-drawer-content>
+</mat-drawer-container> -->

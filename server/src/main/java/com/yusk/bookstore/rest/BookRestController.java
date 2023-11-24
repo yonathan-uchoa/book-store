@@ -32,8 +32,9 @@ public class BookRestController {
     }
     @GetMapping
     public ResponseEntity<Iterable<Book>> searchAll(@RequestParam(required = false) String title) {
-        if(title == null)
+        if(title == null){
             return ResponseEntity.ok().body(bookService.searchAll());
+        }
         return ResponseEntity.ok().body(bookService.findByTitleContaining(title));
     }
     @GetMapping("/{id}")

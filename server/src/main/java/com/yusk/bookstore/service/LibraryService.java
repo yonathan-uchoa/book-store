@@ -1,6 +1,7 @@
 package com.yusk.bookstore.service;
 
 import com.yusk.bookstore.model.BookSearch;
+import feign.RequestLine;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,5 +10,4 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface LibraryService {
     @GetMapping
     BookSearch getBooks(@RequestParam String q, @RequestParam String mode);
-
 }

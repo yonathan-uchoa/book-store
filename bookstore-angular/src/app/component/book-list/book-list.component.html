@@ -1,0 +1,80 @@
+<!-- <div class="content responsive-grid">
+  <mat-card class="text-center" fxFlexAlign="stretch" *ngFor="let book of books; let i = index">
+    <img mat-card-image [src]="coverSearch(book.coverUrl)" alt="cover_img"/>
+    <mat-card-content class="card-book">
+      <h3><b>{{book.title}}</b></h3>
+      <p>
+        {{book.genre}}
+        {{book.author}}
+      </p>
+      <h2><b>{{book.price | currency}}</b></h2>
+    </mat-card-content>
+    <mat-card-content>
+      <button><mat-icon mat-raised-button>add_shopping_cart</mat-icon></button>
+      <button><mat-icon mat-raised-button>favorite</mat-icon></button>
+    </mat-card-content>
+  </mat-card>
+</div> -->
+
+<!--
+<mat-card class="text-center">
+  <div>
+
+  </div>
+  <div class="w-full"
+  [ngClass]="['px-8 flex flex-col justify-between']">
+
+    <p class="line-clamp-2">
+      {{book.author}}
+      teste
+      teste
+      teste
+      teste
+      teste
+      teste
+      teste
+      teste
+      teste
+      teste
+
+    <h4>{{9.99 | currency}}</h4>
+  </div>
+  <div class="flex justify-between">
+    <button><mat-icon class="">shopping_cart</mat-icon></button>
+    <button><mat-icon class="text-red-500">favorite</mat-icon></button>
+  </div>
+</mat-card> -->
+<div class="flex">
+  <div class="shrink-0">
+    <div class="mx-auto p-6 grid grid-cols-3 gap-4">
+      <div class="col-span-1
+      bg-white border-2 p-4" *ngFor="let book of books; let i = index">
+        <div class="flex justify-center">
+          <button class="bg-gray-100">
+            <img class="mb-1 mx-auto h-[150px]" [src]="coverSearch(book.coverUrl)" alt="cover_img"/>
+          </button>
+        </div>
+        <button>
+          <h2 class="mb-2 font-bold text-lg
+          transition duration-100 hover:text-orange-500">
+            {{book.title}}
+          </h2>
+        </button>
+
+        <p class="text-sm text-gray-600">
+          by {{book.author}}
+        </p>
+        <p class="truncate">
+          some description
+        </p>
+
+        <h2 class="font-bold">{{book.price | currency}}</h2>
+        <div class="flex justify-between">
+          <button class="transition duration-100 hover:scale-125"><mat-icon>shopping_cart</mat-icon></button>
+          <button class="transition duration-100 hover:scale-125"><mat-icon>favorite</mat-icon></button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

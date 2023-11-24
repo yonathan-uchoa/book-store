@@ -1,11 +1,10 @@
 export interface Book {
-  key: string;
-  type: string;
+  id: number;
+  genre: string[];
   title: string;
-  author_name: string[];
-  author_alternative_name: string[];
-  ratings_average: number;
-  cover_edition_key: string;
+  author: string[];
+  price: number;
+  coverUrl: string;
 }
 
 export interface BookSearch {
